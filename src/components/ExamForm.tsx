@@ -161,6 +161,7 @@ const ExamForm: React.FC<ExamFormProps> = ({ onSubmit, isLoading, language }) =>
             value={params.topics}
             onChange={handleChange}
             placeholder={t.separateTopics}
+            required
           />
         </Grid>
         <Grid item xs={12}>
