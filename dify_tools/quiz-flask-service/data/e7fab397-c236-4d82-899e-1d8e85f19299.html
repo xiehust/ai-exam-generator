@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <meta charset="utf-8">
+    <style>
+        body {
+            font-family: sans-serif;
+        }
+        code, pre {
+            font-family: monospace;
+        }
+        h1 code,
+        h2 code,
+        h3 code,
+        h4 code,
+        h5 code,
+        h6 code {
+            font-size: inherit;
+        }
+        ul li {
+            list-style-type: none;
+        }
+        table {
+        @extend .table;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+            integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+            crossorigin="anonymous"></script>
+</head>
+<body>
+
+<div class="container">
+    <div class="form-row">
+        <div class="container">
+            <p>基于您的要求，我为2nd级别的学生设计了一份中等难度的历史考卷，包含5道题目（3道单选题和2道多选题）。由于您没有提供具体的参考资料，我将基于一般的历史知识出题。以下是考卷内容：</p>
+<h1>2年级历史考试</h1>
+<hr>
+<ol>
+<li>
+<p>谁被称为"美国国父"？</p>
+<ul class="radio-list">
+<li><label><input type="radio" data-question="1" data-content="0" /> 托马斯·杰斐逊</label></li>
+<li><label><input type="radio" data-question="0" data-content="1" /> 乔治·华盛顿</label></li>
+<li><label><input type="radio" data-question="1" data-content="0" /> 亚伯拉罕·林肯</label></li>
+<li><label><input type="radio" data-question="1" data-content="0" /> 本杰明·富兰克林</label></li>
+</ul>
+</li>
+<li>
+<p>下列哪个事件标志着美国独立战争的开始？</p>
+<ul class="radio-list">
+<li><label><input type="radio" data-question="1" data-content="0" /> 波士顿倾茶事件</label></li>
+<li><label><input type="radio" data-question="1" data-content="0" /> 独立宣言的签署</label></li>
+<li><label><input type="radio" data-question="0" data-content="1" /> 莱克星顿和康科德战役</label></li>
+<li><label><input type="radio" data-question="1" data-content="0" /> 约克镇之战</label></li>
+</ul>
+</li>
+<li>
+<p>古埃及最著名的建筑是什么？</p>
+<ul class="radio-list">
+<li><label><input type="radio" data-question="1" data-content="0" /> 长城</label></li>
+<li><label><input type="radio" data-question="1" data-content="0" /> 罗马斗兽场</label></li>
+<li><label><input type="radio" data-question="0" data-content="1" /> 金字塔</label></li>
+<li><label><input type="radio" data-question="1" data-content="0" /> 埃菲尔铁塔</label></li>
+</ul>
+</li>
+<li>
+<p>以下哪些是古代文明的四大发源地？（多选）</p>
+<ul class="checklist">
+<li><label><input type="checkbox" data-question="0" data-content="1" /> 古埃及</label></li>
+<li><label><input type="checkbox" data-question="0" data-content="1" /> 古巴比伦</label></li>
+<li><label><input type="checkbox" data-question="1" data-content="0" /> 古罗马</label></li>
+<li><label><input type="checkbox" data-question="0" data-content="1" /> 古印度</label></li>
+<li><label><input type="checkbox" data-question="0" data-content="1" /> 古中国</label></li>
+</ul>
+</li>
+<li>
+<p>下列哪些发明被认为是中国古代的四大发明？（多选）</p>
+<ul class="checklist">
+<li><label><input type="checkbox" data-question="0" data-content="1" /> 造纸术</label></li>
+<li><label><input type="checkbox" data-question="0" data-content="1" /> 指南针</label></li>
+<li><label><input type="checkbox" data-question="1" data-content="0" /> 蒸汽机</label></li>
+<li><label><input type="checkbox" data-question="0" data-content="1" /> 火药</label></li>
+<li><label><input type="checkbox" data-question="0" data-content="1" /> 印刷术</label></li>
+</ul>
+</li>
+</ol>
+        </div>
+    </div>
+    <div id="tg-msg" class="alert" role="alert" style="display: none">
+        <span id="tg-correct-questions"></span> Correct! <br /><b>Rating: <span id="tg-score"></span>%</b>
+    </div>
+    <div class="row">
+        <button id="check-questions" class="btn btn-lg btn-success">Check</button>
+        <button id="reset-questions" class="btn btn-link">Reset All</button>
+    </div>
+    <script type="text/javascript">$(function(){
+    $('ul.radio-list,ul.checklist,ul.textbox').each(function(i, el){
+        var questionClass = $(this).attr('class');
+        $(this).parent().addClass('question-row').addClass(questionClass);
+        if (questionClass=='radio-list') {
+            $(this).find('input[type="radio"]').attr('name', 'radio-question-' + i);
+        }
+    });
+
+    function checkQuestion() {
+        resetQuestions(true);
+        var questions = $('li.question-row');
+        var total_questions = questions.length;
+        var correct = 0;
+
+        questions.each(function(i, el) {
+            var self = $(this);
+            // Single Question.
+            if (self.hasClass('radio-list')) {
+                if (self.find('input[type="radio"][data-content="1"]:checked').length == 1) {
+                    correct += 1;
+                } else {
+                    self.addClass('text-danger');
+                }
+            }
+            // Textbox Question.
+            if(self.hasClass('textbox')) {
+                var textbox = self.find('input[type="text"]');
+                var correct_text = String(textbox.data("content")).trim().split("").reverse().join("");
+                if(String(textbox.val()).trim().toLowerCase()==correct_text.toLowerCase()) {
+                    correct += 1;
+                } else {
+                    self.addClass('text-danger');
+                    textbox.parent().find("i.text-correct").html(correct_text);
+                }
+            }
+            // Multiple selection Questions.
+            if(self.hasClass('checklist')) {
+                var total_corrects = self.find('input[type="checkbox"][data-content="1"]').length;
+                var total_incorrects = self.find('input[type="checkbox"][data-content="0"]').length;
+                var correct_selected = self.find('input[type="checkbox"][data-content="1"]:checked').length;
+                var incorrect_selected = self.find('input[type="checkbox"][data-content="0"]:checked').length;
+                var qc = +((correct_selected / total_corrects) - (incorrect_selected/total_incorrects)).toFixed(2);
+                if (qc < 0) {
+                    qc = 0;
+                }
+                correct += qc;
+                if (qc == 0) {
+                    self.addClass('text-danger');
+                } else if (qc > 0 && qc < 1) {
+                    self.addClass('text-warning');
+                }
+            }
+        });
+
+        showScore(correct, total_questions);
+    }
+
+    function showScore(correct, total) {
+        var score = (correct / total).toFixed(2) * 100;
+        var msgClass = 'alert-danger';
+        if (score >= 70) {
+            msgClass = 'alert-success';
+        } else if (score >= 50) {
+            msgClass = 'alert-warning';
+        }
+        $('#tg-correct-questions').text(correct + ' out of ' + total);
+        $('#tg-score').text(score);
+        $('#tg-msg').addClass(msgClass).show();
+    }
+    function resetQuestions(keep) {
+        $('li.question-row').removeClass('text-danger').removeClass('text-warning');
+        $('i.text-correct').html('');
+        $('#tg-msg').removeClass('alert-danger').removeClass('alert-success').removeClass('alert-warning').hide();
+        if(keep === true) {
+            return;
+        }
+        $('li.question-row').find('input[type="text"]').val('');
+        $('li.question-row').find('input[type="radio"],input[type="checkbox"]').prop('checked', false);
+    }
+    $('#check-questions').on('click', checkQuestion);
+    $('#reset-questions').on('click', resetQuestions);
+
+});</script>
+</div>
+</body>
+</html>

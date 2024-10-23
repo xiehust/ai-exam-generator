@@ -22,6 +22,6 @@ export const subjectOptions = [
   { en: 'Physics', zh: '物理' },
   { en: 'Chemistry', zh: '化学' },
   { en: 'Biology', zh: '生物' },
-  { en: 'Literature', zh: '文学' },
+  { en: 'Literature', zh: '语文' },
   { en: 'Computer Science', zh: '计算机科学' }
 ];

@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <meta charset="utf-8">
+    <style>
+        body {
+            font-family: sans-serif;
+        }
+        code, pre {
+            font-family: monospace;
+        }
+        h1 code,
+        h2 code,
+        h3 code,
+        h4 code,
+        h5 code,
+        h6 code {
+            font-size: inherit;
+        }
+        ul li {
+            list-style-type: none;
+        }
+        table {
+        @extend .table;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+            integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+            crossorigin="anonymous"></script>
+</head>
+<body>
+
+<div class="container">
+    <div class="form-row">
+        <div class="container">
+            <h1>10年级科学考试：毛泽东思想与科学发展</h1>
+<hr>
+<ol>
+<li>
+<p>毛泽东同志曾说："实践是检验真理的唯一标准"。这一思想在科学研究中的应用体现为：</p>
+<ul class="radio-list">
+<li><label><input type="radio" data-question="1" data-content="0" /> 只相信理论，不需要实验</label></li>
+<li><label><input type="radio" data-question="1" data-content="0" /> 实验结果与理论不符时，应该忽略实验结果</label></li>
+<li><label><input type="radio" data-question="0" data-content="1" /> 通过实验验证科学假说，并根据实验结果修正理论</label></li>
+<li><label><input type="radio" data-question="1" data-content="0" /> 科学研究不需要实践，只需要思考</label></li>
+</ul>
+</li>
+<li>
+<p>下列哪些选项体现了毛泽东同志"实事求是"的思想在科学研究中的应用？</p>
+<ul class="checklist">
+<li><label><input type="checkbox" data-question="0" data-content="1" /> 客观记录实验数据，不篡改结果</label></li>
+<li><label><input type="checkbox" data-question="0" data-content="1" /> 根据新的证据修正已有理论</label></li>
+<li><label><input type="checkbox" data-question="0" data-content="1" /> 承认研究中的错误并及时纠正</label></li>
+<li><label><input type="checkbox" data-question="1" data-content="0" /> 为了支持自己的理论而忽视相反的证据</label></li>
+</ul>
+</li>
+<li>
+<p>毛泽东思想强调"群众路线"。在科学研究中，这一思想可以体现为：</p>
+<ul class="radio-list">
+<li><label><input type="radio" data-question="1" data-content="0" /> 科学研究只能由精英完成，不需要考虑普通群众</label></li>
+<li><label><input type="radio" data-question="1" data-content="0" /> 科学研究结果不需要向公众公开</label></li>
+<li><label><input type="radio" data-question="1" data-content="0" /> 科学研究应该完全由群众决定方向</label></li>
+<li><label><input type="radio" data-question="0" data-content="1" /> 科学研究应该考虑社会需求，并将成果普及到群众中</label></li>
+</ul>
+</li>
+<li>
+<p>在科学实验中，我们应该秉持毛泽东同志"独立自主、自力更生"的精神。这意味着：</p>
+<ul class="textbox">
+<li><input type="text" data-content="果成究研的人他赖依目盲不，神精新创挥发该应中研科在" data-question="果s成s究s研s的s人s他s赖s依s目s盲s不s，s神s精s新s创s挥s发s该s应s中s研s科s在s" placeholder="Enter the correct answer." class="form-control" />
+</ul>
+</li>
+<li>
+<p>毛泽东同志提出"在现有基础上的发展"。在科学研究中，这一思想可以理解为：</p>
+<ul class="radio-list">
+<li><label><input type="radio" data-question="1" data-content="0" /> 科学研究应该完全否定前人的工作</label></li>
+<li><label><input type="radio" data-question="1" data-content="0" /> 科学研究不需要创新，只需要重复前人的工作</label></li>
+<li><label><input type="radio" data-question="0" data-content="1" /> 科学研究应该在前人工作的基础上进行创新和突破</label></li>
+<li><label><input type="radio" data-question="1" data-content="0" /> 科学研究应该完全脱离现有理论，从零开始</label></li>
+</ul>
+</li>
+</ol>
+        </div>
+    </div>
+    <div id="tg-msg" class="alert" role="alert" style="display: none">
+        <span id="tg-correct-questions"></span> Correct! <br /><b>Rating: <span id="tg-score"></span>%</b>
+    </div>
+    <div class="row">
+        <button id="check-questions" class="btn btn-lg btn-success">Check</button>
+        <button id="reset-questions" class="btn btn-link">Reset All</button>
+    </div>
+    <script type="text/javascript">$(function(){
+    $('ul.radio-list,ul.checklist,ul.textbox').each(function(i, el){
+        var questionClass = $(this).attr('class');
+        $(this).parent().addClass('question-row').addClass(questionClass);
+        if (questionClass=='radio-list') {
+            $(this).find('input[type="radio"]').attr('name', 'radio-question-' + i);
+        }
+    });
+
+    function checkQuestion() {
+        resetQuestions(true);
+        var questions = $('li.question-row');
+        var total_questions = questions.length;
+        var correct = 0;
+
+        questions.each(function(i, el) {
+            var self = $(this);
+            // Single Question.
+            if (self.hasClass('radio-list')) {
+                if (self.find('input[type="radio"][data-content="1"]:checked').length == 1) {
+                    correct += 1;
+                } else {
+                    self.addClass('text-danger');
+                }
+            }
+            // Textbox Question.
+            if(self.hasClass('textbox')) {
+                var textbox = self.find('input[type="text"]');
+                var correct_text = String(textbox.data("content")).trim().split("").reverse().join("");
+                if(String(textbox.val()).trim().toLowerCase()==correct_text.toLowerCase()) {
+                    correct += 1;
+                } else {
+                    self.addClass('text-danger');
+                    textbox.parent().find("i.text-correct").html(correct_text);
+                }
+            }
+            // Multiple selection Questions.
+            if(self.hasClass('checklist')) {
+                var total_corrects = self.find('input[type="checkbox"][data-content="1"]').length;
+                var total_incorrects = self.find('input[type="checkbox"][data-content="0"]').length;
+                var correct_selected = self.find('input[type="checkbox"][data-content="1"]:checked').length;
+                var incorrect_selected = self.find('input[type="checkbox"][data-content="0"]:checked').length;
+                var qc = +((correct_selected / total_corrects) - (incorrect_selected/total_incorrects)).toFixed(2);
+                if (qc < 0) {
+                    qc = 0;
+                }
+                correct += qc;
+                if (qc == 0) {
+                    self.addClass('text-danger');
+                } else if (qc > 0 && qc < 1) {
+                    self.addClass('text-warning');
+                }
+            }
+        });
+
+        showScore(correct, total_questions);
+    }
+
+    function showScore(correct, total) {
+        var score = (correct / total).toFixed(2) * 100;
+        var msgClass = 'alert-danger';
+        if (score >= 70) {
+            msgClass = 'alert-success';
+        } else if (score >= 50) {
+            msgClass = 'alert-warning';
+        }
+        $('#tg-correct-questions').text(correct + ' out of ' + total);
+        $('#tg-score').text(score);
+        $('#tg-msg').addClass(msgClass).show();
+    }
+    function resetQuestions(keep) {
+        $('li.question-row').removeClass('text-danger').removeClass('text-warning');
+        $('i.text-correct').html('');
+        $('#tg-msg').removeClass('alert-danger').removeClass('alert-success').removeClass('alert-warning').hide();
+        if(keep === true) {
+            return;
+        }
+        $('li.question-row').find('input[type="text"]').val('');
+        $('li.question-row').find('input[type="radio"],input[type="checkbox"]').prop('checked', false);
+    }
+    $('#check-questions').on('click', checkQuestion);
+    $('#reset-questions').on('click', resetQuestions);
+
+});</script>
+</div>
+</body>
+</html>

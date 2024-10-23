@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <meta charset="utf-8">
+    <style>
+        body {
+            font-family: sans-serif;
+        }
+        code, pre {
+            font-family: monospace;
+        }
+        h1 code,
+        h2 code,
+        h3 code,
+        h4 code,
+        h5 code,
+        h6 code {
+            font-size: inherit;
+        }
+        ul li {
+            list-style-type: none;
+        }
+        table {
+        @extend .table;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+            integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+            crossorigin="anonymous"></script>
+</head>
+<body>
+
+<div class="container">
+    <div class="form-row">
+        <div class="container">
+            <p>标签中提供修订后的试卷。
+</thinking></p>
+<p><content></p>
+<h1>6年级数学应用题测试</h1>
+<hr>
+<ol>
+<li>
+<p>小数乘法：0.035 × 0.03 的结果的小数位数有 ____ 位。</p>
+<ul class="radio-list">
+<li><label><input type="radio" data-question="1" data-content="0" /> 2</label></li>
+<li><label><input type="radio" data-question="1" data-content="0" /> 3</label></li>
+<li><label><input type="radio" data-question="0" data-content="1" /> 4</label></li>
+<li><label><input type="radio" data-question="1" data-content="0" /> 5</label></li>
+</ul>
+</li>
+<li>
+<p>在一个魔法学校，三位老师各自准备了一个神奇的盒子，里面放了不同颜色的魔法石。四个学生猜测盒子里魔法石的颜色：</p>
+</li>
+</ol>
+<p>艾玛说："1号盒是红色，2号盒是蓝色，3号盒是绿色。"
+   哈利说："1号盒是黄色，2号盒是蓝色，3号盒是紫色。"
+   罗恩说："1号盒是绿色，2号盒是黄色，3号盒是红色。"
+   赫敏说："1号盒是黄色，2号盒是紫色，3号盒是绿色。"</p>
+<p>校长说："你们中有一个人恰好猜对了两个，其余三人都只猜对一个。"</p>
+<p>那么3号盒中放的魔法石是 ____ 色。</p>
+<pre><code>- ( ) 红
+- ( ) 蓝
+- (x) 绿
+- ( ) 黄
+- ( ) 紫
+</code></pre>
+<ol>
+<li>
+<p>在一个奇怪的小镇上，一半的居民只在周一、周三和周五说谎，另一半的居民只在周二、周四和周六说谎。有一天，小镇上所有的人都说："我明天会说实话。"那么，这一天是 ____。</p>
+<ul class="radio-list">
+<li><label><input type="radio" data-question="1" data-content="0" /> 周一</label></li>
+<li><label><input type="radio" data-question="1" data-content="0" /> 周二</label></li>
+<li><label><input type="radio" data-question="1" data-content="0" /> 周三</label></li>
+<li><label><input type="radio" data-question="0" data-content="1" /> 周四</label></li>
+<li><label><input type="radio" data-question="1" data-content="0" /> 周五</label></li>
+</ul>
+</li>
+<li>
+<p>5吨西瓜在产地测得含水量为98%，运到超市后测得含水量为97%。运到超市后，西瓜还剩 ____ 吨。</p>
+<ul class="radio-list">
+<li><label><input type="radio" data-question="1" data-content="0" /> 2</label></li>
+<li><label><input type="radio" data-question="1" data-content="0" /> 3</label></li>
+<li><label><input type="radio" data-question="1" data-content="0" /> 4</label></li>
+<li><label><input type="radio" data-question="0" data-content="1" /> 5</label></li>
+</ul>
+</li>
+<li>
+<p>小明买了一支股票，第一年股价下跌了25%，第二年应上涨 ____ %才能恢复原值。</p>
+<ul class="radio-list">
+<li><label><input type="radio" data-question="1" data-content="0" /> 25</label></li>
+<li><label><input type="radio" data-question="1" data-content="0" /> 30</label></li>
+<li><label><input type="radio" data-question="0" data-content="1" /> 33.33</label></li>
+<li><label><input type="radio" data-question="1" data-content="0" /> 35</label></li>
+</ul>
+</li>
+</ol>
+        </div>
+    </div>
+    <div id="tg-msg" class="alert" role="alert" style="display: none">
+        <span id="tg-correct-questions"></span> Correct! <br /><b>Rating: <span id="tg-score"></span>%</b>
+    </div>
+    <div class="row">
+        <button id="check-questions" class="btn btn-lg btn-success">Check</button>
+        <button id="reset-questions" class="btn btn-link">Reset All</button>
+    </div>
+    <script type="text/javascript">$(function(){
+    $('ul.radio-list,ul.checklist,ul.textbox').each(function(i, el){
+        var questionClass = $(this).attr('class');
+        $(this).parent().addClass('question-row').addClass(questionClass);
+        if (questionClass=='radio-list') {
+            $(this).find('input[type="radio"]').attr('name', 'radio-question-' + i);
+        }
+    });
+
+    function checkQuestion() {
+        resetQuestions(true);
+        var questions = $('li.question-row');
+        var total_questions = questions.length;
+        var correct = 0;
+
+        questions.each(function(i, el) {
+            var self = $(this);
+            // Single Question.
+            if (self.hasClass('radio-list')) {
+                if (self.find('input[type="radio"][data-content="1"]:checked').length == 1) {
+                    correct += 1;
+                } else {
+                    self.addClass('text-danger');
+                }
+            }
+            // Textbox Question.
+            if(self.hasClass('textbox')) {
+                var textbox = self.find('input[type="text"]');
+                var correct_text = String(textbox.data("content")).trim().split("").reverse().join("");
+                if(String(textbox.val()).trim().toLowerCase()==correct_text.toLowerCase()) {
+                    correct += 1;
+                } else {
+                    self.addClass('text-danger');
+                    textbox.parent().find("i.text-correct").html(correct_text);
+                }
+            }
+            // Multiple selection Questions.
+            if(self.hasClass('checklist')) {
+                var total_corrects = self.find('input[type="checkbox"][data-content="1"]').length;
+                var total_incorrects = self.find('input[type="checkbox"][data-content="0"]').length;
+                var correct_selected = self.find('input[type="checkbox"][data-content="1"]:checked').length;
+                var incorrect_selected = self.find('input[type="checkbox"][data-content="0"]:checked').length;
+                var qc = +((correct_selected / total_corrects) - (incorrect_selected/total_incorrects)).toFixed(2);
+                if (qc < 0) {
+                    qc = 0;
+                }
+                correct += qc;
+                if (qc == 0) {
+                    self.addClass('text-danger');
+                } else if (qc > 0 && qc < 1) {
+                    self.addClass('text-warning');
+                }
+            }
+        });
+
+        showScore(correct, total_questions);
+    }
+
+    function showScore(correct, total) {
+        var score = (correct / total).toFixed(2) * 100;
+        var msgClass = 'alert-danger';
+        if (score >= 70) {
+            msgClass = 'alert-success';
+        } else if (score >= 50) {
+            msgClass = 'alert-warning';
+        }
+        $('#tg-correct-questions').text(correct + ' out of ' + total);
+        $('#tg-score').text(score);
+        $('#tg-msg').addClass(msgClass).show();
+    }
+    function resetQuestions(keep) {
+        $('li.question-row').removeClass('text-danger').removeClass('text-warning');
+        $('i.text-correct').html('');
+        $('#tg-msg').removeClass('alert-danger').removeClass('alert-success').removeClass('alert-warning').hide();
+        if(keep === true) {
+            return;
+        }
+        $('li.question-row').find('input[type="text"]').val('');
+        $('li.question-row').find('input[type="radio"],input[type="checkbox"]').prop('checked', false);
+    }
+    $('#check-questions').on('click', checkQuestion);
+    $('#reset-questions').on('click', resetQuestions);
+
+});</script>
+</div>
+</body>
+</html>

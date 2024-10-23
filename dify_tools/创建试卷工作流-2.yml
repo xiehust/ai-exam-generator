@@ -1,0 +1,359 @@
+app:
+  description: ''
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: workflow
+  name: 创建试卷工作流-2
+  use_icon_as_answer_icon: false
+kind: app
+version: 0.1.2
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        sourceType: start
+        targetType: llm
+      id: 1729081904149-source-1729082008367-target
+      source: '1729081904149'
+      sourceHandle: source
+      target: '1729082008367'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: http-request
+        targetType: end
+      id: 1729082866108-source-1729082920043-target
+      source: '1729082866108'
+      sourceHandle: source
+      target: '1729082920043'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: llm
+      id: 1729082008367-source-1729090053085-target
+      source: '1729082008367'
+      sourceHandle: source
+      target: '1729090053085'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: code
+      id: 1729090053085-source-1729090719076-target
+      source: '1729090053085'
+      sourceHandle: source
+      target: '1729090719076'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: code
+        targetType: http-request
+      id: 1729090719076-source-1729082866108-target
+      source: '1729090719076'
+      sourceHandle: source
+      target: '1729082866108'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: 开始
+        type: start
+        variables:
+        - label: reference
+          max_length: 5000
+          options: []
+          required: false
+          type: paragraph
+          variable: reference
+        - label: grade
+          max_length: 48
+          options: []
+          required: true
+          type: text-input
+          variable: grade
+        - label: subject
+          max_length: 200
+          options: []
+          required: true
+          type: text-input
+          variable: subject
+        - label: types
+          max_length: 200
+          options: []
+          required: true
+          type: text-input
+          variable: types
+        - label: count
+          max_length: 48
+          options: []
+          required: true
+          type: number
+          variable: count
+        - label: topics
+          max_length: 500
+          options: []
+          required: false
+          type: paragraph
+          variable: topics
+        - label: difficulty
+          max_length: 48
+          options: []
+          required: true
+          type: text-input
+          variable: difficulty
+        - label: comments
+          max_length: 1000
+          options: []
+          required: false
+          type: paragraph
+          variable: comments
+      height: 272
+      id: '1729081904149'
+      position:
+        x: 127.2080995532599
+        y: 282
+      positionAbsolute:
+        x: 127.2080995532599
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: anthropic.claude-3-5-sonnet-20240620-v1:0
+          provider: bedrock
+        prompt_template:
+        - id: 13b736d2-19f8-4e67-885a-e21dbafae348
+          role: system
+          text: '你是一个辅助设计考卷的机器人
+
+            你的任务是帮助用户快速创建、设计一份面向{{#1729081904149.grade#}}级别学生的考卷，考卷以markdown格式给出，默认使用中文回答。'
+        - edition_type: basic
+          id: 1e7f17b9-4f0a-47bf-9aad-b7c0b37e9ca1
+          role: user
+          text: "## 出题要求\n- 问题归属的科目是：\n{{#1729081904149.subject#}}\n\n- 参考以下资料进行出题：\n\
+            ```\n{{#1729081904149.reference#}}\n```\n- 教师对题目的额外备注要求 (可选）：\n{{#1729081904149.comments#}}\n\
+            \n- 考试关于的主题(可选)：\n{{#1729081904149.topics#}}\n\n- 问题类型:\n{{#1729081904149.types#}}\n\
+            \n- 题目面向年级\n{{#1729081904149.grade#}}\n\n- 题目难度：\n{{#1729081904149.difficulty#}}\n\
+            \n- 题目数量：\n{{#1729081904149.count#}}\n\n- 出题的时候，同时生成正确的答案，正常答案的标记如下：\n\
+            单选题的选项：(x)\n多选题的选项：[x] \n填空题：- R:= 正确答案\n## 回复格式示例:\n# 问卷标题\n---\n1. MaxSoft\
+            \ is a software company.\n    - (x) True\n    - ( ) False\n    # (x)为正确答案\n\
+            \n2. The domain of MaxSoft is test automation framework development.\n\
+                - (x) True\n    - ( ) False \n\n3. What are the test automation frameworks\
+            \ developed by MaxSoft?\n    - [x] IntelliAPI\n    - [x] WebBot\n    -\
+            \ [ ] Gauge\n    - [ ] Selenium\n    # [x]为正确答案\n\n4. Who is the Co-Founder\
+            \ of MaxSoft?\n    - R:= Osanda \n    #填空题正确答案格式"
+        selected: false
+        title: LLM
+        type: llm
+        variables: []
+        vision:
+          configs:
+            detail: high
+          enabled: true
+      height: 98
+      id: '1729082008367'
+      position:
+        x: 531.7273777585033
+        y: 282
+      positionAbsolute:
+        x: 531.7273777585033
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        authorization:
+          config: null
+          type: no-auth
+        body:
+          data: '{{#1729090719076.result#}}'
+          type: raw-text
+        desc: ''
+        headers: ''
+        method: post
+        params: ''
+        selected: false
+        timeout:
+          max_connect_timeout: 0
+          max_read_timeout: 0
+          max_write_timeout: 0
+        title: HTTP 请求
+        type: http-request
+        url: http://127.0.0.1:5006/upload_markdown
+        variables: []
+      height: 110
+      id: '1729082866108'
+      position:
+        x: 1735.7273777585033
+        y: 282
+      positionAbsolute:
+        x: 1735.7273777585033
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        outputs:
+        - value_selector:
+          - '1729082866108'
+          - body
+          variable: body
+        selected: false
+        title: 结束
+        type: end
+      height: 90
+      id: '1729082920043'
+      position:
+        x: 2039.7273777585033
+        y: 282
+      positionAbsolute:
+        x: 2039.7273777585033
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        model:
+          completion_params:
+            temperature: 0.1
+          mode: chat
+          name: anthropic.claude-3-5-sonnet-20240620-v1:0
+          provider: bedrock
+        prompt_template:
+        - id: 74b06b06-a9da-4c62-9d96-ca25e9b67ae6
+          role: system
+          text: '你是一个辅助设计考卷的机器人
+
+            你的任务是检查上一个老师出的试卷，发现其中的错误并校订，生成修改后的试卷，默认使用中文回答。'
+        - id: 9c95c648-dad4-42ea-8798-d1103c9e7809
+          role: user
+          text: "## 出题要求\n- 问题归属的科目是：\n{{#1729081904149.subject#}}\n\n- 参考以下资料进行出题：\n\
+            ```\n{{#1729081904149.reference#}}\n```\n- 教师对题目的额外备注要求 (可选）：\n{{#1729081904149.comments#}}\n\
+            \n- 考试关于的主题(可选)：\n{{#1729081904149.topics#}}\n\n- 问题类型:\n{{#1729081904149.types#}}\n\
+            \n- 题目面向年级\n{{#1729081904149.grade#}}\n\n- 题目难度：\n{{#1729081904149.difficulty#}}\n\
+            \n- 题目数量：\n{{#1729081904149.count#}}\n\n## 需要检查修订的试卷\n{{#1729082008367.text#}}\n\
+            \n请先思考，把思考过程放到<thinking>标签中，然后把修改后试卷内容放到<content>标签中，\n\n## <content>标签中试卷格式要求如下：\n\
+            - 同时生成正确的答案，正常答案的标记如下：\n单选题的选项：(x)\n多选题的选项：[x] \n填空题：- R:= 正确答案\n## 回复格式示例:\n\
+            # 问卷标题\n---\n1. MaxSoft is a software company.\n    - (x) True\n    -\
+            \ ( ) False\n    # (x)为正确答案\n\n2. The domain of MaxSoft is test automation\
+            \ framework development.\n    - (x) True\n    - ( ) False \n\n3. What\
+            \ are the test automation frameworks developed by MaxSoft?\n    - [x]\
+            \ IntelliAPI\n    - [x] WebBot\n    - [ ] Gauge\n    - [ ] Selenium\n\
+            \    # [x]为正确答案\n\n4. Who is the Co-Founder of MaxSoft?\n    - R:= Osanda\
+            \ \n    #填空题正确答案格式"
+        selected: false
+        title: LLM 2
+        type: llm
+        variables: []
+        vision:
+          configs:
+            detail: high
+          enabled: true
+      height: 98
+      id: '1729090053085'
+      position:
+        x: 835.7273777585033
+        y: 282
+      positionAbsolute:
+        x: 835.7273777585033
+        y: 282
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "\nimport re\ndef parse( text: str) -> str:\n    pattern = r\"<content>(.*?)</content>\"\
+          \n    match = re.search(pattern, text, re.DOTALL)\n    if match:\n     \
+          \   text = match.group(1)\n        return text.strip()\n    else:\n    \
+          \    return text\n\ndef main(text: str ) -> dict:\n    return {\n      \
+          \  \"result\": parse(text)\n    }\n"
+        code_language: python3
+        desc: ''
+        outputs:
+          result:
+            children: null
+            type: string
+        selected: false
+        title: 代码执行
+        type: code
+        variables:
+        - value_selector:
+          - '1729090053085'
+          - text
+          variable: text
+      height: 54
+      id: '1729090719076'
+      position:
+        x: 1325.880000023787
+        y: 282
+      positionAbsolute:
+        x: 1325.880000023787
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    viewport:
+      x: -842.0725356623293
+      y: 324.85017671941466
+      zoom: 0.8397314929441428
