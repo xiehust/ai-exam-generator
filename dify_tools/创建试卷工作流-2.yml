@@ -36,17 +36,6 @@ workflow:
     edges:
     - data:
         isInIteration: false
-        sourceType: start
-        targetType: llm
-      id: 1729081904149-source-1729082008367-target
-      source: '1729081904149'
-      sourceHandle: source
-      target: '1729082008367'
-      targetHandle: target
-      type: custom
-      zIndex: 0
-    - data:
-        isInIteration: false
         sourceType: http-request
         targetType: end
       id: 1729082866108-source-1729082920043-target
@@ -86,6 +75,74 @@ workflow:
       source: '1729090719076'
       sourceHandle: source
       target: '1729082866108'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: start
+        targetType: code
+      id: 1729081904149-source-1729157250010-target
+      source: '1729081904149'
+      sourceHandle: source
+      target: '1729157250010'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: code
+        targetType: if-else
+      id: 1729157250010-source-1729157456993-target
+      source: '1729157250010'
+      sourceHandle: source
+      target: '1729157456993'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: tool
+      id: 1729157456993-true-1729149811376-target
+      source: '1729157456993'
+      sourceHandle: 'true'
+      target: '1729149811376'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: tool
+        targetType: variable-aggregator
+      id: 1729149811376-source-1729158945725-target
+      source: '1729149811376'
+      sourceHandle: source
+      target: '1729158945725'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: variable-aggregator
+        targetType: llm
+      id: 1729158945725-source-1729082008367-target
+      selected: false
+      source: '1729158945725'
+      sourceHandle: source
+      target: '1729082008367'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: variable-aggregator
+      id: 1729157456993-false-1729158945725-target
+      selected: false
+      source: '1729157456993'
+      sourceHandle: 'false'
+      target: '1729158945725'
       targetHandle: target
       type: custom
       zIndex: 0
@@ -144,19 +201,19 @@ workflow:
           required: false
           type: paragraph
           variable: comments
-      height: 272
+      height: 270
       id: '1729081904149'
       position:
-        x: 127.2080995532599
-        y: 282
+        x: -37.692436606348906
+        y: 299.2899199358634
       positionAbsolute:
-        x: 127.2080995532599
-        y: 282
+        x: -37.692436606348906
+        y: 299.2899199358634
       selected: false
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 242
     - data:
         context:
           enabled: false
@@ -178,17 +235,17 @@ workflow:
           id: 1e7f17b9-4f0a-47bf-9aad-b7c0b37e9ca1
           role: user
           text: "## 出题要求\n- 问题归属的科目是：\n{{#1729081904149.subject#}}\n\n- 参考以下资料进行出题：\n\
-            ```\n{{#1729081904149.reference#}}\n```\n- 教师对题目的额外备注要求 (可选）：\n{{#1729081904149.comments#}}\n\
+            ```\n{{#1729158945725.output#}}\n```\n- 教师对题目的额外备注要求 (可选）：\n{{#1729081904149.comments#}}\n\
             \n- 考试关于的主题(可选)：\n{{#1729081904149.topics#}}\n\n- 问题类型:\n{{#1729081904149.types#}}\n\
             \n- 题目面向年级\n{{#1729081904149.grade#}}\n\n- 题目难度：\n{{#1729081904149.difficulty#}}\n\
             \n- 题目数量：\n{{#1729081904149.count#}}\n\n- 出题的时候，同时生成正确的答案，正常答案的标记如下：\n\
-            单选题的选项：(x)\n多选题的选项：[x] \n填空题：- R:= 正确答案\n## 回复格式示例:\n# 问卷标题\n---\n1. MaxSoft\
-            \ is a software company.\n    - (x) True\n    - ( ) False\n    # (x)为正确答案\n\
-            \n2. The domain of MaxSoft is test automation framework development.\n\
-                - (x) True\n    - ( ) False \n\n3. What are the test automation frameworks\
-            \ developed by MaxSoft?\n    - [x] IntelliAPI\n    - [x] WebBot\n    -\
-            \ [ ] Gauge\n    - [ ] Selenium\n    # [x]为正确答案\n\n4. Who is the Co-Founder\
-            \ of MaxSoft?\n    - R:= Osanda \n    #填空题正确答案格式"
+            单选题的选项：- (x)\n多选题的选项：- [x] \n填空题：- R:= 正确答案\n## 回复格式示例:\n# 问卷标题\n---\n\
+            1. MaxSoft is a software company.\n    - (x) True\n    - ( ) False\n \
+            \   # (x)为正确答案\n\n2. The domain of MaxSoft is test automation framework\
+            \ development.\n    - (x) True\n    - ( ) False \n\n3. What are the test\
+            \ automation frameworks developed by MaxSoft?\n    - [x] IntelliAPI\n\
+                - [x] WebBot\n    - [ ] Gauge\n    - [ ] Selenium\n    # [x]为正确答案\n\
+            \n4. Who is the Co-Founder of MaxSoft?\n    - R:= Osanda \n    #填空题正确答案格式"
         selected: false
         title: LLM
         type: llm
@@ -197,19 +254,19 @@ workflow:
           configs:
             detail: high
           enabled: true
-      height: 98
+      height: 96
       id: '1729082008367'
       position:
-        x: 531.7273777585033
-        y: 282
+        x: 1379.3257844834718
+        y: 292.0637129528414
       positionAbsolute:
-        x: 531.7273777585033
-        y: 282
+        x: 1379.3257844834718
+        y: 292.0637129528414
       selected: false
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 242
     - data:
         authorization:
           config: null
@@ -230,19 +287,19 @@ workflow:
         type: http-request
         url: http://127.0.0.1:5006/upload_markdown
         variables: []
-      height: 110
+      height: 108
       id: '1729082866108'
       position:
-        x: 1735.7273777585033
-        y: 282
+        x: 2389.204602101314
+        y: 574.0066190932698
       positionAbsolute:
-        x: 1735.7273777585033
-        y: 282
+        x: 2389.204602101314
+        y: 574.0066190932698
       selected: false
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 242
     - data:
         desc: ''
         outputs:
@@ -253,19 +310,19 @@ workflow:
         selected: false
         title: 结束
         type: end
-      height: 90
+      height: 88
       id: '1729082920043'
       position:
-        x: 2039.7273777585033
+        x: 2939.7273777585033
         y: 282
       positionAbsolute:
-        x: 2039.7273777585033
+        x: 2939.7273777585033
         y: 282
       selected: false
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 242
     - data:
         context:
           enabled: false
@@ -286,20 +343,20 @@ workflow:
         - id: 9c95c648-dad4-42ea-8798-d1103c9e7809
           role: user
           text: "## 出题要求\n- 问题归属的科目是：\n{{#1729081904149.subject#}}\n\n- 参考以下资料进行出题：\n\
-            ```\n{{#1729081904149.reference#}}\n```\n- 教师对题目的额外备注要求 (可选）：\n{{#1729081904149.comments#}}\n\
+            ```\n{{#1729158945725.output#}}\n```\n- 教师对题目的额外备注要求 (可选）：\n{{#1729081904149.comments#}}\n\
             \n- 考试关于的主题(可选)：\n{{#1729081904149.topics#}}\n\n- 问题类型:\n{{#1729081904149.types#}}\n\
             \n- 题目面向年级\n{{#1729081904149.grade#}}\n\n- 题目难度：\n{{#1729081904149.difficulty#}}\n\
             \n- 题目数量：\n{{#1729081904149.count#}}\n\n## 需要检查修订的试卷\n{{#1729082008367.text#}}\n\
             \n请先思考，把思考过程放到<thinking>标签中，然后把修改后试卷内容放到<content>标签中，\n\n## <content>标签中试卷格式要求如下：\n\
-            - 同时生成正确的答案，正常答案的标记如下：\n单选题的选项：(x)\n多选题的选项：[x] \n填空题：- R:= 正确答案\n## 回复格式示例:\n\
-            # 问卷标题\n---\n1. MaxSoft is a software company.\n    - (x) True\n    -\
-            \ ( ) False\n    # (x)为正确答案\n\n2. The domain of MaxSoft is test automation\
+            - 同时生成正确的答案，正常答案的标记如下：\n单选题的选项：- (x)\n多选题的选项：- [x]\n填空题：- R:= 正确答案\n##\
+            \ 回复格式示例:\n# 问卷标题\n---\n1. MaxSoft is a software company.\n    - (x) True\n\
+                - ( ) False\n    # (x)为正确答案\n\n2. The domain of MaxSoft is test automation\
             \ framework development.\n    - (x) True\n    - ( ) False \n\n3. What\
             \ are the test automation frameworks developed by MaxSoft?\n    - [x]\
             \ IntelliAPI\n    - [x] WebBot\n    - [ ] Gauge\n    - [ ] Selenium\n\
             \    # [x]为正确答案\n\n4. Who is the Co-Founder of MaxSoft?\n    - R:= Osanda\
             \ \n    #填空题正确答案格式"
-        selected: false
+        selected: true
         title: LLM 2
         type: llm
         variables: []
@@ -307,19 +364,19 @@ workflow:
           configs:
             detail: high
           enabled: true
-      height: 98
+      height: 96
       id: '1729090053085'
       position:
-        x: 835.7273777585033
-        y: 282
+        x: 1798.265443517116
+        y: 146.20221860827877
       positionAbsolute:
-        x: 835.7273777585033
-        y: 282
+        x: 1798.265443517116
+        y: 146.20221860827877
       selected: true
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 242
     - data:
         code: "\nimport re\ndef parse( text: str) -> str:\n    pattern = r\"<content>(.*?)</content>\"\
           \n    match = re.search(pattern, text, re.DOTALL)\n    if match:\n     \
@@ -340,20 +397,144 @@ workflow:
           - '1729090053085'
           - text
           variable: text
-      height: 54
+      height: 52
       id: '1729090719076'
       position:
-        x: 1325.880000023787
+        x: 2225.880000023787
         y: 282
       positionAbsolute:
-        x: 1325.880000023787
+        x: 2225.880000023787
         y: 282
       selected: false
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 244
+      width: 242
+    - data:
+        desc: ''
+        provider_id: webscraper
+        provider_name: webscraper
+        provider_type: builtin
+        selected: false
+        title: 网页爬虫
+        tool_configurations:
+          generate_summary: 0
+          user_agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36
+            (KHTML, like Gecko) Chrome/100.0.1000.0 Safari/537.36
+        tool_label: 网页爬虫
+        tool_name: webscraper
+        tool_parameters:
+          url:
+            type: mixed
+            value: '{{#1729081904149.reference#}}'
+        type: tool
+      height: 114
+      id: '1729149811376'
+      position:
+        x: 783.3478961699124
+        y: 1.6423000438094277
+      positionAbsolute:
+        x: 783.3478961699124
+        y: 1.6423000438094277
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        code: "\nimport re\n\ndef is_url(text):\n    text = text.strip()\n    # Regular\
+          \ expression pattern for URL validation\n    pattern = re.compile(\n   \
+          \     r'^'  # Start of the string\n        r'(?:http|https)://'  # Protocol\
+          \ (http or https)\n        r'(?:(?:[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?\\\
+          .)+(?:[A-Z]{2,6}\\.?|[A-Z0-9-]{2,}\\.?)|'  # Domain\n        r'localhost|'\
+          \  # localhost\n        r'\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3})'  #\
+          \ IP address\n        r'(?::\\d+)?'  # Optional port\n        r'(?:/?|[/?]\\\
+          S+)'  # Path\n        r'$',  # End of the string\n        re.IGNORECASE\n\
+          \    )\n    return bool(pattern.match(text))\n\ndef main(arg1: str) -> dict:\n\
+          \    \n    return {\n        \"result\": \"url\" if is_url(arg1) else \"\
+          text\"\n    }\n"
+        code_language: python3
+        desc: ''
+        outputs:
+          result:
+            children: null
+            type: string
+        selected: false
+        title: 代码执行 2
+        type: code
+        variables:
+        - value_selector:
+          - '1729081904149'
+          - reference
+          variable: arg1
+      height: 52
+      id: '1729157250010'
+      position:
+        x: 243.10998857213337
+        y: 95.14074484278731
+      positionAbsolute:
+        x: 243.10998857213337
+        y: 95.14074484278731
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        cases:
+        - case_id: 'true'
+          conditions:
+          - comparison_operator: is
+            id: 7e550003-f8c9-4802-8b2b-380a29a6b4fc
+            value: url
+            varType: string
+            variable_selector:
+            - '1729157250010'
+            - result
+          id: 'true'
+          logical_operator: and
+        desc: ''
+        selected: false
+        title: 条件分支
+        type: if-else
+      height: 124
+      id: '1729157456993'
+      position:
+        x: 453.2564939612929
+        y: 260.9450267246996
+      positionAbsolute:
+        x: 453.2564939612929
+        y: 260.9450267246996
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        desc: ''
+        output_type: string
+        selected: false
+        title: 变量聚合器
+        type: variable-aggregator
+        variables:
+        - - '1729149811376'
+          - text
+        - - '1729081904149'
+          - reference
+      height: 137
+      id: '1729158945725'
+      position:
+        x: 945.8641518714016
+        y: 423.1839134138227
+      positionAbsolute:
+        x: 945.8641518714016
+        y: 423.1839134138227
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
     viewport:
-      x: -842.0725356623293
-      y: 324.85017671941466
-      zoom: 0.8397314929441428
+      x: -306.94115175295724
+      y: 196.49628929978462
+      zoom: 1.0360625361952411
