@@ -22,7 +22,11 @@
 ## 后端启动
 1. 安装dify，参考dify官方文档 https://docs.dify.ai/zh-hans
 2. 在dify上导入 [创建试卷工作流](./dify_tools/创建试卷工作流-2.yml)
-2. 进入dify_tools/quiz-flask-service目录，打包quiz-flask-service,并运行。 参考说明[README](./dify_tools/quiz-flask-service/README.md)
+3. 找到工作流API密钥  
+![示例1](./assets/image8.png)   
+然后配置到到AI 考试生成器前端页面     
+![示例1](./assets/image9.png)  
+4. 进入dify_tools/quiz-flask-service目录，打包quiz-flask-service,并运行。 参考说明[README](./dify_tools/quiz-flask-service/README.md)
 
 
 ## 场景示例
@@ -30,6 +34,7 @@
 - 填写输入信息   
 这里我们输入一个关于岳阳楼记的链接https://www.gushiwen.cn/gushiwen_2bb3cf3475.aspx，生成阅读理解题  
 ![示例1](./assets/image1.png)
+![alt text](image.png)
 - 点击生成  
 ![结果](./assets/image2.png)
 - 点击查看考试开始试卷  
