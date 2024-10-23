@@ -21,6 +21,7 @@
 
 ## 后端启动
 1. 安装dify，参考dify官方文档 https://docs.dify.ai/zh-hans
+2. 在dify上导入 [创建试卷工作流](./dify_tools/创建试卷工作流-2.yml)
 2. 进入dify_tools/quiz-flask-service目录，打包quiz-flask-service,并运行。 参考说明[README](./dify_tools/quiz-flask-service/README.md)
 
 
