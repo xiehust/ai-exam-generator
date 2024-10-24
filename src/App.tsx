@@ -40,6 +40,33 @@ const AppContent: React.FC = () => {
     }
   }, []);
 
+  const processSSEData = (buffer: string): { completeData: string[], remainingBuffer: string } => {
+    const lines = buffer.split('\n');
+    const completeData: string[] = [];
+    let remainingBuffer = '';
+
+    for (let i = 0; i < lines.length; i++) {
+      const line = lines[i].trim();
+      if (!line) continue;
+
+      if (line.startsWith('data: ')) {
+        try {
+          const jsonStr = line.slice(6);
+          JSON.parse(jsonStr); // Test if it's valid JSON
+          completeData.push(jsonStr);
+        } catch (e) {
+          // If this is the last line and it's incomplete, add it to the buffer
+          if (i === lines.length - 1) {
+            remainingBuffer = line;
+          }
+          // Otherwise, it's a corrupted message that we'll skip
+        }
+      }
+    }
+
+    return { completeData, remainingBuffer };
+  };
+
   const handleSubmit = async (params: any) => {
     setIsLoading(true);
     setExamResult(null);
@@ -84,17 +111,22 @@ const AppContent: React.FC = () => {
       }
 
       let examContent = '';
+      let dataBuffer = '';
 
       while (true) {
         const { done, value } = await reader.read();
         if (done) break;
 
         const chunk = new TextDecoder().decode(value);
-        const lines = chunk.split('\n');
+        dataBuffer += chunk;
 
-        for (const line of lines) {
-          if (line.startsWith('data: ')) {
-            const data = JSON.parse(line.slice(6));
+        const { completeData, remainingBuffer } = processSSEData(dataBuffer);
+        dataBuffer = remainingBuffer;
+
+        for (const jsonStr of completeData) {
+          try {
+            const data = JSON.parse(jsonStr);
+            
             if (data.event === 'workflow_finished') {
               setIsLoading(false);
               setProgress(100);
@@ -119,6 +151,8 @@ const AppContent: React.FC = () => {
               setProgress((prevProgress) => Math.min(prevProgress + 10, 90));
               setStatusMessage(t.processingExamData);
             }
+          } catch (error) {
+            console.error('Error parsing JSON:', error, 'Data:', jsonStr);
           }
         }
       }
