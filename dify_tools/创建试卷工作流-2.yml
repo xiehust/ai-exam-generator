@@ -204,16 +204,16 @@ workflow:
       height: 270
       id: '1729081904149'
       position:
-        x: -37.692436606348906
-        y: 299.2899199358634
+        x: 30
+        y: 335
       positionAbsolute:
-        x: -37.692436606348906
-        y: 299.2899199358634
+        x: 30
+        y: 335
       selected: false
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 242
+      width: 243
     - data:
         context:
           enabled: false
@@ -223,7 +223,7 @@ workflow:
           completion_params:
             temperature: 0.7
           mode: chat
-          name: anthropic.claude-3-5-sonnet-20240620-v1:0
+          name: anthropic.claude-3-5-sonnet-20241022-v2:0
           provider: bedrock
         prompt_template:
         - id: 13b736d2-19f8-4e67-885a-e21dbafae348
@@ -257,16 +257,16 @@ workflow:
       height: 96
       id: '1729082008367'
       position:
-        x: 1379.3257844834718
-        y: 292.0637129528414
+        x: 1545
+        y: 335
       positionAbsolute:
-        x: 1379.3257844834718
-        y: 292.0637129528414
+        x: 1545
+        y: 335
       selected: false
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 242
+      width: 243
     - data:
         authorization:
           config: null
@@ -290,16 +290,16 @@ workflow:
       height: 108
       id: '1729082866108'
       position:
-        x: 2389.204602101314
-        y: 574.0066190932698
+        x: 2454
+        y: 335
       positionAbsolute:
-        x: 2389.204602101314
-        y: 574.0066190932698
+        x: 2454
+        y: 335
       selected: false
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 242
+      width: 243
     - data:
         desc: ''
         outputs:
@@ -313,16 +313,16 @@ workflow:
       height: 88
       id: '1729082920043'
       position:
-        x: 2939.7273777585033
-        y: 282
+        x: 2757
+        y: 335
       positionAbsolute:
-        x: 2939.7273777585033
-        y: 282
+        x: 2757
+        y: 335
       selected: false
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 242
+      width: 243
     - data:
         context:
           enabled: false
@@ -330,9 +330,9 @@ workflow:
         desc: ''
         model:
           completion_params:
-            temperature: 0.1
+            temperature: 0.5
           mode: chat
-          name: anthropic.claude-3-5-sonnet-20240620-v1:0
+          name: anthropic.claude-3-5-sonnet-20241022-v2:0
           provider: bedrock
         prompt_template:
         - id: 74b06b06-a9da-4c62-9d96-ca25e9b67ae6
@@ -347,16 +347,17 @@ workflow:
             \n- 考试关于的主题(可选)：\n{{#1729081904149.topics#}}\n\n- 问题类型:\n{{#1729081904149.types#}}\n\
             \n- 题目面向年级\n{{#1729081904149.grade#}}\n\n- 题目难度：\n{{#1729081904149.difficulty#}}\n\
             \n- 题目数量：\n{{#1729081904149.count#}}\n\n## 需要检查修订的试卷\n{{#1729082008367.text#}}\n\
-            \n请先思考，把思考过程放到<thinking>标签中，然后把修改后试卷内容放到<content>标签中，\n\n## <content>标签中试卷格式要求如下：\n\
-            - 同时生成正确的答案，正常答案的标记如下：\n单选题的选项：- (x)\n多选题的选项：- [x]\n填空题：- R:= 正确答案\n##\
-            \ 回复格式示例:\n# 问卷标题\n---\n1. MaxSoft is a software company.\n    - (x) True\n\
-                - ( ) False\n    # (x)为正确答案\n\n2. The domain of MaxSoft is test automation\
-            \ framework development.\n    - (x) True\n    - ( ) False \n\n3. What\
-            \ are the test automation frameworks developed by MaxSoft?\n    - [x]\
-            \ IntelliAPI\n    - [x] WebBot\n    - [ ] Gauge\n    - [ ] Selenium\n\
+            \nPlease think first, and output your intermedate result enclosed in xml\
+            \  tag <thinking>, then output the final content enclosed in xml tag <answer>\n\
+            \n## 最终试卷格式要求如下：\n- 同时生成正确的答案，正常答案的标记如下：\n单选题的选项：- (x)\n多选题的选项：- [x]\n\
+            填空题：- R:= 正确答案\n## 回复格式示例:\n# 问卷标题\n---\n1. MaxSoft is a software company.\n\
+                - (x) True\n    - ( ) False\n    # (x)为正确答案\n\n2. The domain of MaxSoft\
+            \ is test automation framework development.\n    - (x) True\n    - ( )\
+            \ False \n\n3. What are the test automation frameworks developed by MaxSoft?\n\
+                - [x] IntelliAPI\n    - [x] WebBot\n    - [ ] Gauge\n    - [ ] Selenium\n\
             \    # [x]为正确答案\n\n4. Who is the Co-Founder of MaxSoft?\n    - R:= Osanda\
             \ \n    #填空题正确答案格式"
-        selected: true
+        selected: false
         title: LLM 2
         type: llm
         variables: []
@@ -367,18 +368,18 @@ workflow:
       height: 96
       id: '1729090053085'
       position:
-        x: 1798.265443517116
-        y: 146.20221860827877
+        x: 1848
+        y: 335
       positionAbsolute:
-        x: 1798.265443517116
-        y: 146.20221860827877
-      selected: true
+        x: 1848
+        y: 335
+      selected: false
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 242
+      width: 243
     - data:
-        code: "\nimport re\ndef parse( text: str) -> str:\n    pattern = r\"<content>(.*?)</content>\"\
+        code: "\nimport re\ndef parse( text: str) -> str:\n    pattern = r\"<answer>(.*?)</answer>\"\
           \n    match = re.search(pattern, text, re.DOTALL)\n    if match:\n     \
           \   text = match.group(1)\n        return text.strip()\n    else:\n    \
           \    return text\n\ndef main(text: str ) -> dict:\n    return {\n      \
@@ -400,16 +401,16 @@ workflow:
       height: 52
       id: '1729090719076'
       position:
-        x: 2225.880000023787
-        y: 282
+        x: 2151
+        y: 335
       positionAbsolute:
-        x: 2225.880000023787
-        y: 282
-      selected: false
+        x: 2151
+        y: 335
+      selected: true
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 242
+      width: 243
     - data:
         desc: ''
         provider_id: webscraper
@@ -431,21 +432,21 @@ workflow:
       height: 114
       id: '1729149811376'
       position:
-        x: 783.3478961699124
-        y: 1.6423000438094277
+        x: 939
+        y: 335
       positionAbsolute:
-        x: 783.3478961699124
-        y: 1.6423000438094277
+        x: 939
+        y: 335
       selected: false
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 242
+      width: 243
     - data:
-        code: "\nimport re\n\ndef is_url(text):\n    text = text.strip()\n    # Regular\
-          \ expression pattern for URL validation\n    pattern = re.compile(\n   \
-          \     r'^'  # Start of the string\n        r'(?:http|https)://'  # Protocol\
-          \ (http or https)\n        r'(?:(?:[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?\\\
+        code: "\nimport re\n\ndef is_url(text):\n    if not text:\n        return\
+          \ False\n    text = text.strip()\n    # Regular expression pattern for URL\
+          \ validation\n    pattern = re.compile(\n        r'^'  # Start of the string\n\
+          \        r'(?:http|https)://'  # Protocol (http or https)\n        r'(?:(?:[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?\\\
           .)+(?:[A-Z]{2,6}\\.?|[A-Z0-9-]{2,}\\.?)|'  # Domain\n        r'localhost|'\
           \  # localhost\n        r'\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3})'  #\
           \ IP address\n        r'(?::\\d+)?'  # Optional port\n        r'(?:/?|[/?]\\\
@@ -470,16 +471,16 @@ workflow:
       height: 52
       id: '1729157250010'
       position:
-        x: 243.10998857213337
-        y: 95.14074484278731
+        x: 333
+        y: 335
       positionAbsolute:
-        x: 243.10998857213337
-        y: 95.14074484278731
+        x: 333
+        y: 335
       selected: false
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 242
+      width: 243
     - data:
         cases:
         - case_id: 'true'
@@ -500,16 +501,16 @@ workflow:
       height: 124
       id: '1729157456993'
       position:
-        x: 453.2564939612929
-        y: 260.9450267246996
+        x: 636
+        y: 335
       positionAbsolute:
-        x: 453.2564939612929
-        y: 260.9450267246996
+        x: 636
+        y: 335
       selected: false
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 242
+      width: 243
     - data:
         desc: ''
         output_type: string
@@ -524,17 +525,17 @@ workflow:
       height: 137
       id: '1729158945725'
       position:
-        x: 945.8641518714016
-        y: 423.1839134138227
+        x: 1242
+        y: 335
       positionAbsolute:
-        x: 945.8641518714016
-        y: 423.1839134138227
+        x: 1242
+        y: 335
       selected: false
       sourcePosition: right
       targetPosition: left
       type: custom
-      width: 242
+      width: 243
     viewport:
-      x: -306.94115175295724
-      y: 196.49628929978462
-      zoom: 1.0360625361952411
+      x: -911.8950631267644
+      y: 405.1765040487742
+      zoom: 0.7043262298366769
