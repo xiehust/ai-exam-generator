@@ -14,6 +14,7 @@ const AppContent: React.FC = () => {
   const [examResult, setExamResult] = useState<string | null>(null);
   const [examLink, setExamLink] = useState<string | null>(null);
   const [apiKey, setApiKey] = useState<string>('');
+  const [apiEndpoint, setApiEndpoint] = useState<string>('/v1/workflows/run');
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -35,8 +36,12 @@ const AppContent: React.FC = () => {
 
   useEffect(() => {
     const savedApiKey = localStorage.getItem('apiKey');
+    const savedApiEndpoint = localStorage.getItem('apiEndpoint');
     if (savedApiKey) {
       setApiKey(savedApiKey);
+    }
+    if (savedApiEndpoint) {
+      setApiEndpoint(savedApiEndpoint);
     }
   }, []);
 
@@ -92,7 +97,7 @@ const AppContent: React.FC = () => {
     });
 
     try {
-      const response = await fetch('/api/v1/workflows/run', {
+      const response = await fetch(apiEndpoint, {
         method: 'POST',
         headers: {
           'Authorization': 'Bearer ' + apiKey,
@@ -186,6 +191,11 @@ const AppContent: React.FC = () => {
     handleClose();
   };
 
+  const handleApiEndpointSave = () => {
+    localStorage.setItem('apiEndpoint', apiEndpoint);
+    handleClose();
+  };
+
   const handleErrorClose = (event?: React.SyntheticEvent | Event, reason?: string) => {
     if (reason === 'clickaway') {
       return;
@@ -242,6 +252,15 @@ const AppContent: React.FC = () => {
               />
             </MenuItem>
             <MenuItem onClick={handleApiKeySave}>{t.saveApiKey}</MenuItem>
+            <MenuItem>
+              <TextField
+                label={t.apiEndpoint}
+                value={apiEndpoint}
+                onChange={(e) => setApiEndpoint(e.target.value)}
+                size="small"
+              />
+            </MenuItem>
+            <MenuItem onClick={handleApiEndpointSave}>{t.saveApiEndpoint}</MenuItem>
           </Menu>
         </Toolbar>
       </AppBar>

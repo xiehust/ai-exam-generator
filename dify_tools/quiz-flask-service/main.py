@@ -6,6 +6,7 @@ import time
 from jinja2 import Environment, PackageLoader, select_autoescape
 import re
 import uuid
+import socket
 # import datatime
 app = Flask(__name__)
 
@@ -22,6 +23,16 @@ os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 # def generate_timestamp():
 #     timestamp = datetime.datetime.now().strftime('%Y%m%d-%H%M%S')
 #     return f"- 生成时间:{timestamp}"
+
+def get_host_ip():
+    try:
+        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        s.connect(('8.8.8.8', 80))
+        ip = s.getsockname()[0]
+    finally:
+        s.close()
+    return ip
+
 
 @app.route('/upload_markdown', methods=['POST'])
 def upload_markdown():
@@ -53,7 +64,7 @@ def upload_markdown():
 
     return jsonify(
         {"message":
-         f"保存成功\n查看链接http://127.0.0.1:5006/get_html/{filename}"}), 200
+         f"保存成功\n查看链接http://{host_ip}:5006/get_html/{filename}"}), 200
 
 
 @app.route('/get_html/<filename>', methods=['GET'])

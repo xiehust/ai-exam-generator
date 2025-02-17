@@ -35,6 +35,8 @@ export const translations = {
     generatingQuestions: 'Generating questions...',
     examGenerationComplete: 'Exam generation complete!',
     generatingExam: 'Generating Exam',
+    apiEndpoint: 'API Endpoint',
+    saveApiEndpoint: 'Save API Endpoint',
   },
   zh: {
     title: 'AI考试生成器',
@@ -70,6 +72,8 @@ export const translations = {
     generatingQuestions: '生成题目中...',
     examGenerationComplete: '考试生成完成！',
     generatingExam: '正在生成考试',
+    apiEndpoint: 'API地址',
+    saveApiEndpoint: '保存API地址',
   },
 } as const;
 
