@@ -21,11 +21,13 @@
 
 ## 后端启动
 1. 安装dify，参考dify官方文档 https://docs.dify.ai/zh-hans
-2. 在dify上导入 [创建试卷工作流](./dify_tools/创建试卷工作流-2.yml)
-3. 找到工作流API密钥  
+2. 在dify上导入 [创建试卷工作流](./dify_tools/创建试卷工作流-2.yml)  
+注意需要修改HTTP请求节点的ip  
+![alt text](./assets/image10.png)   
+3. 找到工作流API密钥和API endpoint，分别点击保存
 ![示例1](./assets/image8.png)   
 然后配置到到AI 考试生成器前端页面     
-![示例1](./assets/image9.png)  
+![示例2](./assets/image9.png)  
 4. 进入dify_tools/quiz-flask-service目录，打包quiz-flask-service,并运行。 参考说明[README](./dify_tools/quiz-flask-service/README.md)
 
 

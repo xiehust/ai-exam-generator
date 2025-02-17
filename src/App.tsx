@@ -14,7 +14,7 @@ const AppContent: React.FC = () => {
   const [examResult, setExamResult] = useState<string | null>(null);
   const [examLink, setExamLink] = useState<string | null>(null);
   const [apiKey, setApiKey] = useState<string>('');
-  const [apiEndpoint, setApiEndpoint] = useState<string>('/v1/workflows/run');
+  const [apiEndpoint, setApiEndpoint] = useState<string>('');
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -97,7 +97,7 @@ const AppContent: React.FC = () => {
     });
 
     try {
-      const response = await fetch(apiEndpoint, {
+      const response = await fetch(apiEndpoint+'/workflows/run', {
         method: 'POST',
         headers: {
           'Authorization': 'Bearer ' + apiKey,
