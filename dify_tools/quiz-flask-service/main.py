@@ -36,6 +36,7 @@ def get_host_ip():
 
 @app.route('/upload_markdown', methods=['POST'])
 def upload_markdown():
+    host_ip = get_host_ip()
     content = request.get_data(as_text=True)
     content = re.sub( r"^\s{3}-","    -",content,flags=re.MULTILINE)
     # timestamp = datetime.datetime.now().strftime('%Y%m%d-%H%M%S')
