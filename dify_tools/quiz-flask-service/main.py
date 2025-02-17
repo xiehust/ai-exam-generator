@@ -24,19 +24,18 @@ os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 #     timestamp = datetime.datetime.now().strftime('%Y%m%d-%H%M%S')
 #     return f"- 生成时间:{timestamp}"
 
-def get_host_ip():
+def get_public_ip():
     try:
-        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        s.connect(('8.8.8.8', 80))
-        ip = s.getsockname()[0]
-    finally:
-        s.close()
-    return ip
+        # 使用外部服务获取公网 IP
+        response = requests.get('https://api.ipify.org').text
+        return response.strip()
+    except:
+        return None
 
 
 @app.route('/upload_markdown', methods=['POST'])
 def upload_markdown():
-    host_ip = get_host_ip()
+    host_ip = get_public_ip()
     content = request.get_data(as_text=True)
     content = re.sub( r"^\s{3}-","    -",content,flags=re.MULTILINE)
     # timestamp = datetime.datetime.now().strftime('%Y%m%d-%H%M%S')
