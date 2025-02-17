@@ -6,7 +6,7 @@ import time
 from jinja2 import Environment, PackageLoader, select_autoescape
 import re
 import uuid
-import socket
+import requests
 # import datatime
 app = Flask(__name__)
 
